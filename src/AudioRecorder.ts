@@ -62,7 +62,7 @@ export class NativeAudioRecorder implements AudioRecorder {
 					throw new Error("No supported mimeType found");
 				}
 
-				const options = { mimeType: this.mimeType };
+				const options = { mimeType: this.mimeType, audioBitsPerSecond: 32000 };
 				const recorder = new MediaRecorder(stream, options);
 
 				recorder.addEventListener("dataavailable", (e: BlobEvent) => {
