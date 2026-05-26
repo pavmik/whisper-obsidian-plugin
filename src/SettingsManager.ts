@@ -46,6 +46,8 @@ export interface WhisperSettings {
 	noteSavePath: string;
 	noteFilenameTemplate: string;
 	noteTemplate: string;
+	// Recording quality
+	audioBitrate: number;
 	// Advanced
 	debugMode: boolean;
 }
@@ -87,6 +89,7 @@ export const DEFAULT_WHISPER: WhisperSettings = {
 	noteSavePath: "",
 	noteFilenameTemplate: "{{datetime}}",
 	noteTemplate: "![[{{audioFile}}]]\n{{transcription}}",
+	audioBitrate: 32000,
 	debugMode: false,
 };
 

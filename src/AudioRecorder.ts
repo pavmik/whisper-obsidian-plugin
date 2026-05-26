@@ -33,6 +33,7 @@ export class NativeAudioRecorder implements AudioRecorder {
 	private recorder: MediaRecorder | null = null;
 	private mimeType: string | undefined;
 	private deviceId: string | null = null;
+	private audioBitrate: number = 32000;
 
 	getRecordingState(): "inactive" | "recording" | "paused" | undefined {
 		return this.recorder?.state;
@@ -44,6 +45,10 @@ export class NativeAudioRecorder implements AudioRecorder {
 
 	setDeviceId(deviceId: string | null): void {
 		this.deviceId = deviceId;
+	}
+
+	setAudioBitrate(bitrate: number): void {
+		this.audioBitrate = bitrate;
 	}
 
 	async startRecording(): Promise<void> {
@@ -62,7 +67,7 @@ export class NativeAudioRecorder implements AudioRecorder {
 					throw new Error("No supported mimeType found");
 				}
 
-				const options = { mimeType: this.mimeType, audioBitsPerSecond: 32000 };
+				const options = { mimeType: this.mimeType, audioBitsPerSecond: this.audioBitrate };
 				const recorder = new MediaRecorder(stream, options);
 
 				recorder.addEventListener("dataavailable", (e: BlobEvent) => {

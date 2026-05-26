@@ -34,6 +34,7 @@ export default class Whisper extends Plugin {
 				? null
 				: this.settings.audioDeviceId;
 		this.recorder.setDeviceId(deviceId);
+		this.recorder.setAudioBitrate(this.settings.audioBitrate ?? 32000);
 
 		this.statusBar = new StatusBar(this);
 

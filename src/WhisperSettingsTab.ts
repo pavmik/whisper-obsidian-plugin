@@ -43,6 +43,7 @@ export class WhisperSettingsTab extends PluginSettingTab {
 		new Setting(containerEl).setName("Recording").setHeading();
 		// async — populates device dropdown after enumeration completes
 		void this.createAudioDeviceSetting();
+		this.createAudioBitrateSetting();
 		this.createSaveAudioFileToggleSetting();
 		if (this.plugin.settings.saveAudioFile) {
 			this.createSaveAudioFilePathSetting();
@@ -274,6 +275,23 @@ export class WhisperSettingsTab extends PluginSettingTab {
 				);
 			});
 		});
+	}
+
+	private createAudioBitrateSetting(): void {
+		new Setting(this.containerEl)
+			.setName("Recording quality")
+			.setDesc("Lower quality = smaller file = longer recordings before hitting the 25 MB API limit")
+			.addDropdown((dropdown) => {
+				dropdown.addOption("32000", "Low (32 kbps) — up to ~90 min");
+				dropdown.addOption("64000", "Medium (64 kbps) — up to ~45 min");
+				dropdown.addOption("128000", "High (128 kbps) — up to ~22 min");
+				dropdown.setValue(String(this.plugin.settings.audioBitrate ?? 32000));
+				dropdown.onChange(async (value) => {
+					this.plugin.settings.audioBitrate = Number(value);
+					await this.settingsManager.saveSettings(this.plugin.settings);
+					this.plugin.recorder.setAudioBitrate(Number(value));
+				});
+			});
 	}
 
 	private createSaveAudioFileToggleSetting(): void {
