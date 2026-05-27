@@ -53,6 +53,7 @@ export class WhisperSettingsTab extends PluginSettingTab {
 		new Setting(containerEl).setName("Output").setHeading();
 		this.createNewFileToggleSetting();
 		if (this.plugin.settings.createNoteFile) {
+			this.createAlsoInsertAtCursorSetting();
 			this.createNewFilePathSetting();
 			this.createNoteFilenameTemplateSetting();
 			this.createNoteTemplateSetting();
@@ -370,6 +371,20 @@ export class WhisperSettingsTab extends PluginSettingTab {
 						}
 						await this.save();
 						this.display();
+					});
+			});
+	}
+
+	private createAlsoInsertAtCursorSetting(): void {
+		new Setting(this.containerEl)
+			.setName("Also insert at cursor")
+			.setDesc("In addition to creating a new note, also paste the transcription at the current cursor position")
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.plugin.settings.alsoInsertAtCursor ?? false)
+					.onChange(async (value) => {
+						this.plugin.settings.alsoInsertAtCursor = value;
+						await this.save();
 					});
 			});
 	}

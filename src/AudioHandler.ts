@@ -252,7 +252,9 @@ export class AudioHandler {
 					resolvedNoteFilePath,
 					noteContent
 				);
-			} else {
+			}
+
+			if (!this.plugin.settings.createNoteFile || this.plugin.settings.alsoInsertAtCursor) {
 				// Paste at cursor if there's an active editor
 				const editor =
 					this.plugin.app.workspace.getActiveViewOfType(

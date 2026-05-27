@@ -43,6 +43,7 @@ export interface WhisperSettings {
 	audioSavePath: string;
 	// Output
 	createNoteFile: boolean;
+	alsoInsertAtCursor: boolean;
 	noteSavePath: string;
 	noteFilenameTemplate: string;
 	noteTemplate: string;
@@ -86,6 +87,7 @@ export const DEFAULT_WHISPER: WhisperSettings = {
 	saveAudioFile: true,
 	audioSavePath: "",
 	createNoteFile: true,
+	alsoInsertAtCursor: false,
 	noteSavePath: "",
 	noteFilenameTemplate: "{{datetime}}",
 	noteTemplate: "![[{{audioFile}}]]\n{{transcription}}",
